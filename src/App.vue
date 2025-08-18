@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { CopyDocument, Refresh } from '@element-plus/icons-vue'
+import { CopyDocument, Fold, Refresh } from '@element-plus/icons-vue'
 </script>
 
 <template>
@@ -20,7 +20,17 @@ import { CopyDocument, Refresh } from '@element-plus/icons-vue'
       </el-header>
       <el-container>
         <!--   侧边栏   -->
-        <el-aside width="200px" class="bg-[#fff] shadow-sm"> 侧边栏 </el-aside>
+        <el-aside class="bg-[#fff] shadow-sm w-50! px-6 py-4 flex flex-col">
+          <h4
+            class="text-[18px] font-bold text-[#1E293B] text-center after:w-full after:h-[1px] after:bg-[#e5e7eb] after:block after:mt-2!"
+          >
+            图表类型
+          </h4>
+          <ul class="w-full flex-1"></ul>
+          <div class="w-full h-10 flex items-center justify-center relative before:w-full before:h-[1px] before:bg-[#e5e7eb] before:absolute before:top-0">
+            <el-icon class="text-[20px]! cursor-pointer"><Fold class="hover:text-[#409eff]"/></el-icon>
+          </div>
+        </el-aside>
         <!--    主区域    -->
         <el-main> 主区域 </el-main>
       </el-container>
