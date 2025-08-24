@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { CopyDocument, Expand, Fold, Menu, Refresh } from '@element-plus/icons-vue'
 import { ref } from 'vue'
+import router from '@/router'
 
 /**
  * 侧边栏是否展开
@@ -13,22 +14,21 @@ const toggleFold = () => {
 }
 
 /**
- * 图表类型
+ * 切换页面
  */
-const toggleMenu = [
-  { id: 1, icon: 'icon-zhuzhuangtu', title: '柱状图' },
-  { id: 2, icon: 'icon-zhexiantu-xianxing', title: '折线图' },
-  { id: 3, icon: 'icon-bg-circular', title: '饼图' },
-  { id: 4, icon: 'icon-sandiantu_fuzhi', title: '散点图' },
-  { id: 5, icon: 'icon-leidatu', title: '雷达图' },
-  { id: 6, icon: 'icon-yibiaopan', title: '仪表盘' },
-]
-const menu = ref<{ id: number; icon: string; title: string }[]>(toggleMenu)
+const changePage = (id: number, name: string) => {
+  menuIndex.value = id
+  router.push({ name })
+}
 
 /**
- * 菜单索引
+ * 初始化
  */
-const menuIndex = ref<number>(1)
+const menu = ref<[]>([]) as any // 导航
+const menuIndex = ref<number>(1) // 导航索引
+onMounted(() => {
+  menu.value = router.getRoutes()
+})
 </script>
 
 <template>
@@ -74,13 +74,13 @@ const menuIndex = ref<number>(1)
               :class="{
                 'px-2': isUnfold,
                 'justify-center': !isUnfold,
-                'bg-[#2563eb1a] text-[#2563eb]': item.id === menuIndex,
+                'bg-[#2563eb1a] text-[#2563eb]': item.meta.id === menuIndex,
               }"
               v-for="item in menu"
-              :key="item.id"
-              @click="menuIndex = item.id"
+              :key="item.meta.id"
+              @click="changePage(item.meta.id, item.name)"
             >
-              <span class="iconfont text-[20px]!" :class="item.icon"></span>
+              <span class="iconfont text-[20px]!" :class="`icon-${item.meta.icon}`"></span>
               <p
                 class="text-[16px] ml-1! transition-all duration-350 ease-out overflow-hidden whitespace-nowrap"
                 :class="
@@ -90,7 +90,7 @@ const menuIndex = ref<number>(1)
                 "
                 v-if="isUnfold"
               >
-                {{ item.title }}
+                {{ item.meta.title }}
               </p>
             </li>
           </ul>
@@ -108,11 +108,13 @@ const menuIndex = ref<number>(1)
           <div class="h-full shadow-sm bg-white rounded-md">
             <el-splitter>
               <el-splitter-panel :collapsible="true" :size="'60%'">
-                <div class="h-full flex items-center justify-center">1</div>
+                <div class="h-full flex items-center justify-center">
+                  <router-view></router-view>
+                </div>
               </el-splitter-panel>
-              <el-splitter-panel :collapsible="true" >
+              <el-splitter-panel :collapsible="true">
                 <el-splitter layout="vertical">
-                  <el-splitter-panel :collapsible="true">
+                  <el-splitter-panel :collapsible="true" :size="'60%'">
                     <div class="h-full flex items-center justify-center">2</div>
                   </el-splitter-panel>
                   <el-splitter-panel :collapsible="true">
