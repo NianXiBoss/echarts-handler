@@ -47,7 +47,7 @@ const menuIndex = ref<number>(1)
           <el-button :icon="CopyDocument" type="primary">复制代码</el-button>
         </div>
       </el-header>
-      <el-container>
+      <el-container class="height-self">
         <!--   侧边栏   -->
         <el-aside
           class="bg-[#fff] shadow-sm px-4 py-4 flex flex-col transition-all duration-300 ease-in-out"
@@ -68,7 +68,7 @@ const menuIndex = ref<number>(1)
               图表类型
             </h4>
           </div>
-          <ul class="w-full flex-1">
+          <ul class="w-full overflow-y-auto h-full scrollbar-hide">
             <li
               class="w-full h-10 rounded-md mt-1! flex items-center cursor-pointer text-[#1E293B] hover:bg-[#2563eb1a] hover:text-[#2563eb]"
               :class="{
@@ -104,10 +104,32 @@ const menuIndex = ref<number>(1)
           </div>
         </el-aside>
         <!--    主区域    -->
-        <el-main> 主区域 </el-main>
+        <el-main>
+          <div class="h-full shadow-sm bg-white rounded-md">
+            <el-splitter>
+              <el-splitter-panel :collapsible="true" :size="'60%'">
+                <div class="h-full flex items-center justify-center">1</div>
+              </el-splitter-panel>
+              <el-splitter-panel :collapsible="true" >
+                <el-splitter layout="vertical">
+                  <el-splitter-panel :collapsible="true">
+                    <div class="h-full flex items-center justify-center">2</div>
+                  </el-splitter-panel>
+                  <el-splitter-panel :collapsible="true">
+                    <div class="h-full flex items-center justify-center">3</div>
+                  </el-splitter-panel>
+                </el-splitter>
+              </el-splitter-panel>
+            </el-splitter>
+          </div>
+        </el-main>
       </el-container>
     </el-container>
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.height-self {
+  height: calc(100% - 52px);
+}
+</style>
