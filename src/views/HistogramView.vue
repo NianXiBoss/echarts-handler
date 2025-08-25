@@ -1,8 +1,11 @@
 <script setup lang="ts">
+import ComponentCard from '@/components/ComponentCard.vue'
 </script>
 
 <template>
-  <h3>柱状图</h3>
+  <ComponentCard configureName="直方图配置">
+
+  </ComponentCard>
 </template>
 
 <style scoped>

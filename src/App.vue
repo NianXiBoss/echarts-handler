@@ -16,8 +16,9 @@ const toggleFold = () => {
 /**
  * 切换页面
  */
-const changePage = (id: number, name: string) => {
+const changePage = (id: number, name: string, title: string) => {
   menuIndex.value = id
+  chartTitle.value = title
   router.push({ name })
 }
 
@@ -26,8 +27,10 @@ const changePage = (id: number, name: string) => {
  */
 const menu = ref<[]>([]) as any // 导航
 const menuIndex = ref<number>(1) // 导航索引
+const chartTitle = ref<string>('')
 onMounted(() => {
   menu.value = router.getRoutes()
+  chartTitle.value = menu.value[0].meta.title
 })
 </script>
 
@@ -78,7 +81,7 @@ onMounted(() => {
               }"
               v-for="item in menu"
               :key="item.meta.id"
-              @click="changePage(item.meta.id, item.name)"
+              @click="changePage(item.meta.id, item.name, item.meta.title)"
             >
               <span class="iconfont text-[20px]!" :class="`icon-${item.meta.icon}`"></span>
               <p
@@ -105,10 +108,11 @@ onMounted(() => {
         </el-aside>
         <!--    主区域    -->
         <el-main>
-          <div class="h-full shadow-sm bg-white rounded-md">
+          <div class="h-full rounded-md">
             <el-splitter>
               <el-splitter-panel :collapsible="true" :size="'60%'">
-                <div class="h-full flex items-center justify-center">
+                <div class="w-full h-full p-[10px] overflow-y-auto">
+                  <h3 class="text-[20px] font-bold text-[#1E293B] mb-4!">{{ chartTitle }}配置</h3>
                   <router-view></router-view>
                 </div>
               </el-splitter-panel>
